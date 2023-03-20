@@ -31,14 +31,17 @@ States<-map_data("state")
 head(States)
 View(States)
 
+# filters out only Montana State map
 Mon_data<-States %>%
   filter(region == "montana")
 View(Mon_data)
 
+# Filters out Montana state from bigfoot data
 Mon_bigfoot <- bigfoot %>%
   filter(state == "Montana")
 View(Mon_bigfoot)
 
+# remove the 19th row with far-end value
 updated_Mon_bigfoot <- Mon_bigfoot[-19,]
 View(updated_Mon_bigfoot)
 
