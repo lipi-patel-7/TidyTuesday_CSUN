@@ -54,7 +54,7 @@ ggplot()+ # creates a ggplot of montana
   coord_map()+
 
 
-geom_point(data = updated_Mon_bigfoot, # adds points as per mutated meteorites data
+geom_point(data = updated_Mon_bigfoot, # adds points as per data
            aes(x = longitude, # assigns axes 
                y = latitude, 
                color = classification))+ 
