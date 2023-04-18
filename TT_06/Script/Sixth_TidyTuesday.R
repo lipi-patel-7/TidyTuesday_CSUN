@@ -42,7 +42,7 @@ geom_polygon(data = world, # opens the world data
              fill = "black") +
   geom_point(data = clean_volcano, # add points as per volcano data
              aes(x = longitude, # assigns axes 
-                 y = latitude), color="red", size = 0.75)+ # plots volcanos at different locations around world
+                 y = latitude), color="red", size = 0.75)+ # plots volcano at different locations around world
   geom_smooth()+
   theme(panel.background = element_rect(fill = "lightblue"))+ # changes background to lightblue for water
   labs(x = "Latitude", y = "Longitude", title = "Distribution of Volcanic eruptions throughout the world")+ # adds labels to axes and title
