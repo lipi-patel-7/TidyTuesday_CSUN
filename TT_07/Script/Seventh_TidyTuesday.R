@@ -37,7 +37,7 @@ p1 <- filtered_surveys %>% # creates plot 1 and uses filtered surveys data
                    xend=year, 
                    y=0, 
                    yend=mean_hfl)) +
-  labs(x = "Year", y = "Hindfoot length (inches)") # adds label to the axes
+  labs(x = "Year", y = "Hindfoot length (mm)") # adds label to the axes
 
 # similarly create second plot
 p2 <- filtered_surveys %>% # creates plot 2 and uses filtered surveys data
