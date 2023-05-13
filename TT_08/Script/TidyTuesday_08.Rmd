@@ -1,0 +1,88 @@
+---
+title: 'TidyTuesday #08'
+author: "Lipi"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    toc: TRUE
+    theme: lumen
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+### Load the libraries
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+library(here)
+library(tidyr)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(mapproj)
+library(plotly)
+```
+
+
+### Read in the data
+```{r}
+sf_rent <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-05/rent.csv')
+glimpse(sf_rent)
+head(sf_rent)
+
+# Get data for counties and filter to keep just the counties in California
+CA<-map_data("county") %>%
+  filter(region == "california")
+head(CA)
+
+```
+
+### Clean the data
+```{r}
+clean_rent <- sf_rent %>% # creates a new df, clean rent
+  drop_na() %>% # removes empty values
+  group_by(city) # groups by city
+head(clean_rent) # shows the data
+```
+
+### Create the map 
+```{r}
+# Get base map
+# base_map <- get_map(location = c(lon = -122, lat = 37), zoom = 15, maptype = "satellite")
+
+
+p <- ggplot() + # labels p as the CA map
+  geom_polygon(data = CA, # geom to plot CA
+               aes(x = long, # assigning axes
+                   y = lat, 
+                   group = group, 
+                   fill = region,
+                   show.legend = FALSE),
+               color = "black")+ # adding color to the lines
+  geom_point(data = clean_rent, # adds another geom to plot the rent/prices
+             aes(x = lon, y = lat, color = price), # assigns axes and adjusts density, size
+                 alpha = 1,
+                 size = 1,
+                 show.legend = TRUE) + # keeps the legend
+  ylim(36, 39.5) + # assigns specific values for y axis label to focus on the SF area
+  # xlim(-120.8, -123)
+  labs(title = "Rents in San Francisco")
+    
+    ggplotly(p, showlegend = FALSE) # makes the plot interactive and removes legend
+```
+
+
+### Save the map
+```{r}
+ggsave(here("TT_08","Output","SF rent.png"),
+       width = 6, height = 6) # in inches)
+```
+
+
+##### I could not figure out how to get rid of lat and long from the label while hovering. I wanted to show only the prices on map. Butttt it does serve the purpose!
